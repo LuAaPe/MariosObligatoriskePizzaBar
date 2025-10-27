@@ -28,7 +28,9 @@ asdafginodaf
     public Order(){
         this(LocalTime.now().plusMinutes(20));
     }
+
     public Order() {
+        super();
         this.id = nextId++;
         this.lines = new ArrayList<>();
         this.pickUpTime = LocalTime.now().plusMinutes(20);
@@ -62,6 +64,10 @@ asdafginodaf
     //Tilføj ordre linje
     public void addOrderLine(OrderLine line) {
         lines.add(line);
+    }
+    public void addProduct(int quantity, Pizza pizza){
+        addOrderLine(new OrderLine(quantity, pizza));
+
     }
 
     //Samlet pris for alle ordre linjer

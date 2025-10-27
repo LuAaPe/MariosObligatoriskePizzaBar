@@ -2,15 +2,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class OrderList {
-    private final ArrayList<Order> activeOrders = new ArrayList<>();
-    private final ArrayList<Order> finishedOrders = new ArrayList<>();
+    private final ArrayList<Order> orders = new ArrayList<>();
 
     public void addOrder(Order o) {
-        activeOrders.add(o);
+        orders.add(o);
     }
 
     public Order findOrderById(int id) {
-        for (Order order : activeOrders) {
+        for (Order order : orders) {
             if (order.getId() == id) {
                 return order;
             }
@@ -20,7 +19,7 @@ public class OrderList {
 
     public ArrayList<Order> getActiveOrders() {
         ArrayList<Order> currentActive = new ArrayList<>();
-        for (Order o : activeOrders) {
+        for (Order o : orders) {
             if (!o.isReady()) {
                 currentActive.add(o);
             }
@@ -31,17 +30,25 @@ public class OrderList {
         return currentActive;
     }
 
-    public ArrayList<Order> getFinishedOrders() {
-        ArrayList<Order> historikOrders = new ArrayList<>();
-        for (Order o : finishedOrders) {
+    public ArrayList<Order> getHistoricOrders() {
+        ArrayList<Order> historicOrders = new ArrayList<>();
+        for (Order o : orders) {
             if (o.isReady()) {
-                historikOrders.add(o);
+                historicOrders.add(o);
             }
         }
-        historikOrders.sort(Comparator.comparing(Order::getPickUpTime));
+        historicOrders.sort(Comparator.comparing(Order::getPickUpTime));
 
-        return historikOrders;
+        return historicOrders;
     }
+
+    /*
+    public ArrayList<Order> getOrdersByCustomer(){
+        for(Order o : orders){
+
+        }
+    }
+*/
 
 
     public boolean completeOrder(int id) {
@@ -57,16 +64,12 @@ public class OrderList {
             System.out.println("Ordren fjernet fra kø og tilføjet til færdige ordre");
             System.out.println("Ordren er tilføjet til kundens profil");
             o.setReady(true);
-            finishedOrders.add(o);
-            activeOrders.remove(o);
             customer.addCustomerOrder(o);
             customer.registerPurchase(o.getTotalCostOfOrder());
             return true;
         } else {
             o.setReady(true);
             System.out.println("Ordren fjernet fra kø og tilføjet til færdige ordre");
-            finishedOrders.add(o);
-            activeOrders.remove(o);
         }
         return true;
 

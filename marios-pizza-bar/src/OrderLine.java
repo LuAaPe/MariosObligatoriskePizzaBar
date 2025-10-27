@@ -1,26 +1,22 @@
 public class OrderLine {
-    private int quantity;
-    private String pizza;
-    private double price;
-    private int pizzaId;
+    private final int quantity;
+    private final Pizza pizza;
 
     public OrderLine(int quantity, Pizza pizza) {
         this.quantity = quantity;
-        this.pizza = pizza.getName();
-        this.price = pizza.getPrice();
-        this.pizzaId = pizza.getID();
+        this.pizza = pizza;
     }
 
     public double getPrice() {
-        return price;
+        return pizza.getPrice();
     }
 
-    public String getPizza() {
-        return pizza;
+    public String getPizzaName() {
+        return pizza.getName();
     }
 
     public int getPizzaId() {
-        return pizzaId;
+        return pizza.getID();
     }
 
     public int getQuantity() {
