@@ -1,12 +1,12 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         OrderList orderList = new OrderList();
         Menu menu = buildMenu();
+        mainMenu(scanner, orderList, menu);
 
-
-
-
-        System.out.println(menu);
 
 
 /*
@@ -35,8 +35,6 @@ public class Main {
 
         orderList.add(order1);
 */
-
-
 
 
     }
@@ -107,6 +105,30 @@ public class Main {
         menu.addPizzaToMenu(p29);
         menu.addPizzaToMenu(p30);
         return menu;
+    }
+
+    public static void mainMenu(Scanner scanner, OrderList orderList, Menu menu) {
+        while (true) {
+            System.out.println("Vælg en mulighed:");
+            System.out.println("1. Vis menu");
+            System.out.println("9. Afslut");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.println(menu);
+                    scanner.nextLine();
+                    break;
+                case 9:
+                    System.out.println("Afslutter...");
+                    scanner.close();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Ugyldigt valg. Prøv igen.");
+            }
+        }
     }
 }
 /*Mangler at få implementeret at kunder bliver oprettet og tilføjet til arkivet ved bestilling

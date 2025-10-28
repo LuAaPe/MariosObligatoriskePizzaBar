@@ -5,8 +5,8 @@ import java.util.Comparator;
 public class OrderList {
     private final ArrayList<Order> orders = new ArrayList<>();
 
-    public void addOrder(Order o) {
-        orders.add(o);
+    public void addOrder(Order order) {
+        orders.add(order);
     }
 
     public Order findOrderById(int id) {
@@ -20,9 +20,9 @@ public class OrderList {
 
     public ArrayList<Order> getActiveOrders() {
         ArrayList<Order> currentActive = new ArrayList<>();
-        for (Order o : orders) {
-            if (!o.isReady()) {
-                currentActive.add(o);
+        for (Order order : orders) {
+            if (!order.isReady()) {
+                currentActive.add(order);
             }
         }
 
@@ -33,9 +33,9 @@ public class OrderList {
 
     public ArrayList<Order> getHistoricOrders() {
         ArrayList<Order> historicOrders = new ArrayList<>();
-        for (Order o : orders) {
-            if (o.isReady()) {
-                historicOrders.add(o);
+        for (Order order : orders) {
+            if (order.isReady()) {
+                historicOrders.add(order);
             }
         }
         historicOrders.sort(Comparator.comparing(Order::getPickUpTime));
@@ -68,23 +68,23 @@ public class OrderList {
 
 
     public boolean completeOrder(int id) {
-        Order o = findOrderById(id);
-        if (o == null) {
+        Order order = findOrderById(id);
+        if (order == null) {
             System.out.println("Ordre ikke fundet");
             return false;
-        } else if (o.isReady()) {
+        } else if (order.isReady()) {
             System.out.println("Ordren er allerede sat som færdig");
             return false;
-        } else if (o.getCustomer() != null) {
-            Customer customer = o.getCustomer();
+        } else if (order.getCustomer() != null) {
+            Customer customer = order.getCustomer();
             System.out.println("Ordren fjernet fra kø og tilføjet til færdige ordre");
             System.out.println("Ordren er tilføjet til kundens profil");
-            o.setReady(true);
-            customer.addCustomerOrder(o);
-            customer.registerPurchase(o.getTotalCostOfOrder());
+            order.setReady(true);
+            customer.addCustomerOrder(order);
+            customer.registerPurchase(order.getTotalCostOfOrder());
             return true;
         } else {
-            o.setReady(true);
+            order.setReady(true);
             System.out.println("Ordren fjernet fra kø og tilføjet til færdige ordre");
         }
         return true;
