@@ -82,7 +82,13 @@ public class Main {
         while (true) {
             System.out.println("Vælg en mulighed:");
             System.out.println("1. Vis menu");
-            System.out.println();
+            System.out.println("2. Opret ordre");
+            System.out.println("3. Vis aktive ordre");
+            System.out.println("4. Vis tidligere ordre");
+            System.out.println("5. Ændre pris på Pizzaer på menu");
+            System.out.println("6. Vis dagens omsætning");
+            System.out.println("7. ");
+            System.out.println("8. V");
             System.out.println("9. Afslut");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -94,6 +100,9 @@ public class Main {
                     break;
                 case 2:
                     createOrder(scanner, orderList, menu);
+                    break;
+                case 3:
+                    System.out.println(orderList.activeOrdersToString());
                     break;
                 case 9:
                     System.out.println("Afslutter...");
@@ -107,20 +116,25 @@ public class Main {
     }
 
     public static void createOrder(Scanner scanner, OrderList orderList, Menu menu) {
-        System.out.println("Indtast tid (timer:minutter)");
+        System.out.println("Indtast afhentningstidpunkt (Timer:Minutter)");
         String time = scanner.nextLine();
         LocalTime pickUpTime = LocalTime.parse(time);
-        Order order = new Order(pickUpTime, null);
-        System.out.println("Intast \"-1\" for at afslutte bestilling");
+        System.out.println("Indtast telefon Nr.");
+        String phoneNr = scanner.nextLine();
+        Order order = new Order(pickUpTime, phoneNr);
         while (true) {
             System.out.println("Indtast pizza nummer:");
             int pizzaId = scanner.nextInt();
-            if (pizzaId == -1) {
-                break;
-            }
+            scanner.nextLine();
             System.out.println("Indtast antal:");
             int quantity = scanner.nextInt();
+            scanner.nextLine();
             order.addProduct(quantity, menu.findPizzaById(pizzaId));
+            System.out.println("Tast \"1\" for at tilføje mere eller tast \"-1\" for at afslutte");
+            int addMore = scanner.nextInt();
+            if (addMore == -1){
+                break;
+            }
         }
         System.out.println(order);
         orderList.addOrder(order);

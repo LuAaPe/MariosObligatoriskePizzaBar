@@ -37,6 +37,10 @@ public class Pizza {
         }
         return ingredient;
     }
+    public void setPrice(double price){
+        this.price= price;
+        System.out.println("Prisen for " + name + "er nu sat til" + price+ "kr");
+    }
 
     @Override
     public String toString() {

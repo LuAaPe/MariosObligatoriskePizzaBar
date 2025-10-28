@@ -3,7 +3,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class OrderList {
-    private final ArrayList<Order> orders = new ArrayList<>();
+    private final ArrayList<Order> orders;
+
+    public OrderList(){
+        this.orders = new ArrayList<>();
+    }
 
     public void addOrder(Order order) {
         orders.add(order);
@@ -31,6 +35,8 @@ public class OrderList {
         return currentActive;
     }
 
+
+
     public ArrayList<Order> getHistoricOrders() {
         ArrayList<Order> historicOrders = new ArrayList<>();
         for (Order order : orders) {
@@ -43,16 +49,26 @@ public class OrderList {
         return historicOrders;
     }
 
-    public double getTotalRevenue(){
-        ArrayList<Order> totalRevenue = new ArrayList<>();
-        for (Order o : orders){
-            if (o.isReady()){
-                totalRevenue.add(o);
-            }
+    private String orderlistToString(ArrayList<Order> orders){
+        String s = "";
+        for (Order order : orders){
+            s += order + "\n";
         }
+        return s;
+    }
+
+    public String activeOrdersToString(){
+        return orderlistToString(getActiveOrders());
+    }
+
+    public String historicOrdersToString(){
+        return orderlistToString(getHistoricOrders());
+    }
+
+    public double getTotalRevenue(){
         double totalSumOfAllSoldPizza = 0;
-        for (Order c : totalRevenue){
-            totalSumOfAllSoldPizza += c.getTotalCostOfOrder();
+        for (Order order : getHistoricOrders()){
+            totalSumOfAllSoldPizza += order.getTotalCostOfOrder();
         }
         return totalSumOfAllSoldPizza;
     }
@@ -90,9 +106,4 @@ public class OrderList {
         return true;
 
     }
-
-    /* public ArrayList<Order> getActiveOrders(){
-        for(int i);
-    }*/
-
 }

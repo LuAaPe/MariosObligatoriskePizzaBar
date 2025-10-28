@@ -11,6 +11,7 @@ public class Order {
     private LocalTime pickUpTime;
     private final LocalDateTime createdAt;
     private boolean isReady;
+    private final String customerPhoneNr;
     /*    private enum status{
         NOT_READY,
         READY,
@@ -20,21 +21,16 @@ public class Order {
 /*
 Kig færdig på det her, hvordan får jeg stadard pickup til at være 20 min fra nu, og derefter kunne ændre det selv
 if de efterfølgende cunstructors??
-
-asdafginodaf
-
-
  */
 
-    public Order(LocalTime pickUpTime, Customer customer)  {
+    public Order(LocalTime pickUpTime, String customerPhoneNr)  {
         this.id = nextId++;
         this.lines = new ArrayList<>();
         this.pickUpTime = pickUpTime;
-        this.customer = customer;
+        this.customerPhoneNr = customerPhoneNr;
         this.createdAt = LocalDateTime.now();
         this.isReady = false;
     }
-
 
     //Tilføj ordre linje
     public void addProduct(int quantity, Pizza pizza){
@@ -89,5 +85,9 @@ asdafginodaf
             s += line + "\n";
         }
         return s;
+    }
+
+    public String getCustomerPhoneNr() {
+        return customerPhoneNr;
     }
 }
