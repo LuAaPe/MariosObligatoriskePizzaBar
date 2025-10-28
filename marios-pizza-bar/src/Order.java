@@ -4,13 +4,13 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Order {
-    private static int nextOrderId = 1;
-    private final int orderId;
+    private static int nextId = 1;
+    private final int id;
     private Customer customer;
     private ArrayList<OrderLine> lines;
     private LocalTime pickUpTime;
-    private final LocalTime createdAt;
-    private boolean isReady = false;
+    private final LocalDateTime createdAt;
+    private boolean isReady;
     /*    private enum status{
         NOT_READY,
         READY,
@@ -25,54 +25,20 @@ asdafginodaf
 
 
  */
-    public Order(){
-        lines = new ArrayList<>();
-        this.orderId = nextOrderId++;
-        this.createdAt = LocalTime.now();
-        this.pickUpTime = createdAt.plusMinutes(30);
+
+    public Order(ArrayList<OrderLine> lines, LocalTime pickUpTime, Customer customer)  {
+        this.id = nextId++;
+        this.lines = new ArrayList<>();
+        this.pickUpTime = pickUpTime;
+        this.customer = customer;
+        this.createdAt = LocalDateTime.now();
+        this.isReady = false;
     }
-//    public Order(){
-//        this(LocalTime.now().plusMinutes(20));
-//    }
-//
-//    public Order() {
-//        super();
-//        this.id = nextId++;
-//        this.lines = new ArrayList<>();
-//        this.pickUpTime = LocalTime.now().plusMinutes(20);
-//        this.customer = null;
-//    }
-//    public Order(int time, int minut) {
-//        this();
-//        this.pickUpTime = LocalTime.of(time, minut);
-//
-//    }
-//    public Order(String phoneNumber, int time, int minut) {
-//        this();
-//        this.pickUpTime = LocalTime.of(time, minut);
-//        this.customer = new Customer("Ukendt", phoneNumber);
-//    }
-//    public Order(String name, int time, int minut) {
-//        this();
-//        this.pickUpTime = LocalTime.of(time, minut);
-//        this.customer = new Customer(name, "Ukendt");
-//    }
-//    public Order(String name, String phoneNumber, int time, int minut) {
-//        this();
-//        this.pickUpTime = LocalTime.of(time, minut);
-//        this.customer = new Customer(name, phoneNumber);
-//    }
-
-
-
 
 
     //Tilføj ordre linje
-    public void addOrderLine(OrderLine line) {
-        lines.add(line);
-    }
     public void addProduct(int quantity, Pizza pizza){
-        addOrderLine(new OrderLine(quantity, pizza));
+        lines.add(new OrderLine(quantity, pizza));
 
     }
 
@@ -91,7 +57,7 @@ asdafginodaf
         return customer;
     }
     public int getId(){
-        return orderId;
+        return id;
     }
     public LocalTime getPickUpTime() {
         return pickUpTime;
@@ -99,7 +65,7 @@ asdafginodaf
     public boolean isReady() {
         return isReady;
     }
-    public LocalTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -118,7 +84,7 @@ asdafginodaf
 
     @Override
     public String toString() {
-        String s = "id " + orderId + "\n";
+        String s = "id " + id + "\n";
         for (OrderLine line : lines) {
             s += line + "\n";
         }
