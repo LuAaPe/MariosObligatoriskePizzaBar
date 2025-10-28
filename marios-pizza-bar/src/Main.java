@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.time.LocalTime;
 
 public class Main {
     public static void main(String[] args) {
@@ -77,7 +78,7 @@ public class Main {
         return menu;
     }
 
-    public static void mainMenu(Scanner scanner, OrderList orderList, Menu menu) {
+    private static void mainMenu(Scanner scanner, OrderList orderList, Menu menu) {
         while (true) {
             System.out.println("Vælg en mulighed:");
             System.out.println("1. Vis menu");
@@ -91,6 +92,9 @@ public class Main {
                     System.out.println(menu);
                     scanner.nextLine();
                     break;
+                case 2:
+                    createOrder(scanner, orderList, menu);
+                    break;
                 case 9:
                     System.out.println("Afslutter...");
                     scanner.close();
@@ -100,6 +104,26 @@ public class Main {
                     System.out.println("Ugyldigt valg. Prøv igen.");
             }
         }
+    }
+
+    public static void createOrder(Scanner scanner, OrderList orderList, Menu menu) {
+        System.out.println("Indtast tid (timer:minutter)");
+        String time = scanner.nextLine();
+        LocalTime pickUpTime = LocalTime.parse(time);
+        Order order = new Order(pickUpTime, null);
+        System.out.println("Intast \"-1\" for at afslutte bestilling");
+        while (true) {
+            System.out.println("Indtast pizza nummer:");
+            int pizzaId = scanner.nextInt();
+            if (pizzaId == -1) {
+                break;
+            }
+            System.out.println("Indtast antal:");
+            int quantity = scanner.nextInt();
+            order.addProduct(quantity, menu.findPizzaById(pizzaId));
+        }
+        System.out.println(order);
+        orderList.addOrder(order);
     }
 }
 /*Mangler at få implementeret at kunder bliver oprettet og tilføjet til arkivet ved bestilling

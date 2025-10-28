@@ -26,7 +26,7 @@ asdafginodaf
 
  */
 
-    public Order(ArrayList<OrderLine> lines, LocalTime pickUpTime, Customer customer)  {
+    public Order(LocalTime pickUpTime, Customer customer)  {
         this.id = nextId++;
         this.lines = new ArrayList<>();
         this.pickUpTime = pickUpTime;
