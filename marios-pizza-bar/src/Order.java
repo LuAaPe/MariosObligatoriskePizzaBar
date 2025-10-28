@@ -9,8 +9,8 @@ public class Order {
     private Customer customer;
     private ArrayList<OrderLine> lines;
     private LocalTime pickUpTime;
-    private final LocalDateTime createdAt = LocalDateTime.now();
-    private boolean isReady = false;
+    private final LocalDateTime createdAt;
+    private boolean isReady;
     /*    private enum status{
         NOT_READY,
         READY,
@@ -25,48 +25,20 @@ asdafginodaf
 
 
  */
-    public Order(){
-        this(LocalTime.now().plusMinutes(20));
-    }
 
-    public Order() {
-        super();
+    public Order(ArrayList<OrderLine> lines, LocalTime pickUpTime, Customer customer)  {
         this.id = nextId++;
         this.lines = new ArrayList<>();
-        this.pickUpTime = LocalTime.now().plusMinutes(20);
-        this.customer = null;
+        this.pickUpTime = pickUpTime;
+        this.customer = customer;
+        this.createdAt = LocalDateTime.now();
+        this.isReady = false;
     }
-    public Order(int time, int minut) {
-        this();
-        this.pickUpTime = LocalTime.of(time, minut);
-
-    }
-    public Order(String phoneNumber, int time, int minut) {
-        this();
-        this.pickUpTime = LocalTime.of(time, minut);
-        this.customer = new Customer("Ukendt", phoneNumber);
-    }
-    public Order(String name, int time, int minut) {
-        this();
-        this.pickUpTime = LocalTime.of(time, minut);
-        this.customer = new Customer(name, "Ukendt");
-    }
-    public Order(String name, String phoneNumber, int time, int minut) {
-        this();
-        this.pickUpTime = LocalTime.of(time, minut);
-        this.customer = new Customer(name, phoneNumber);
-    }
-
-
-
 
 
     //Tilføj ordre linje
-    public void addOrderLine(OrderLine line) {
-        lines.add(line);
-    }
     public void addProduct(int quantity, Pizza pizza){
-        addOrderLine(new OrderLine(quantity, pizza));
+        lines.add(new OrderLine(quantity, pizza));
 
     }
 
