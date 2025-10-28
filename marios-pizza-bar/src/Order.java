@@ -4,12 +4,12 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Order {
-    private static int nextId = 1;
-    private final int id;
+    private static int nextOrderId = 1;
+    private final int orderId;
     private Customer customer;
     private ArrayList<OrderLine> lines;
     private LocalTime pickUpTime;
-    private final LocalDateTime createdAt = LocalDateTime.now();
+    private final LocalTime createdAt;
     private boolean isReady = false;
     /*    private enum status{
         NOT_READY,
@@ -26,36 +26,42 @@ asdafginodaf
 
  */
     public Order(){
-        this(LocalTime.now().plusMinutes(20));
+        lines = new ArrayList<>();
+        this.orderId = nextOrderId++;
+        this.createdAt = LocalTime.now();
+        this.pickUpTime = createdAt.plusMinutes(30);
     }
-
-    public Order() {
-        super();
-        this.id = nextId++;
-        this.lines = new ArrayList<>();
-        this.pickUpTime = LocalTime.now().plusMinutes(20);
-        this.customer = null;
-    }
-    public Order(int time, int minut) {
-        this();
-        this.pickUpTime = LocalTime.of(time, minut);
-
-    }
-    public Order(String phoneNumber, int time, int minut) {
-        this();
-        this.pickUpTime = LocalTime.of(time, minut);
-        this.customer = new Customer("Ukendt", phoneNumber);
-    }
-    public Order(String name, int time, int minut) {
-        this();
-        this.pickUpTime = LocalTime.of(time, minut);
-        this.customer = new Customer(name, "Ukendt");
-    }
-    public Order(String name, String phoneNumber, int time, int minut) {
-        this();
-        this.pickUpTime = LocalTime.of(time, minut);
-        this.customer = new Customer(name, phoneNumber);
-    }
+//    public Order(){
+//        this(LocalTime.now().plusMinutes(20));
+//    }
+//
+//    public Order() {
+//        super();
+//        this.id = nextId++;
+//        this.lines = new ArrayList<>();
+//        this.pickUpTime = LocalTime.now().plusMinutes(20);
+//        this.customer = null;
+//    }
+//    public Order(int time, int minut) {
+//        this();
+//        this.pickUpTime = LocalTime.of(time, minut);
+//
+//    }
+//    public Order(String phoneNumber, int time, int minut) {
+//        this();
+//        this.pickUpTime = LocalTime.of(time, minut);
+//        this.customer = new Customer("Ukendt", phoneNumber);
+//    }
+//    public Order(String name, int time, int minut) {
+//        this();
+//        this.pickUpTime = LocalTime.of(time, minut);
+//        this.customer = new Customer(name, "Ukendt");
+//    }
+//    public Order(String name, String phoneNumber, int time, int minut) {
+//        this();
+//        this.pickUpTime = LocalTime.of(time, minut);
+//        this.customer = new Customer(name, phoneNumber);
+//    }
 
 
 
@@ -85,7 +91,7 @@ asdafginodaf
         return customer;
     }
     public int getId(){
-        return id;
+        return orderId;
     }
     public LocalTime getPickUpTime() {
         return pickUpTime;
@@ -93,7 +99,7 @@ asdafginodaf
     public boolean isReady() {
         return isReady;
     }
-    public LocalDateTime getCreatedAt() {
+    public LocalTime getCreatedAt() {
         return createdAt;
     }
 
@@ -112,7 +118,7 @@ asdafginodaf
 
     @Override
     public String toString() {
-        String s = "id " + id + "\n";
+        String s = "id " + orderId + "\n";
         for (OrderLine line : lines) {
             s += line + "\n";
         }
