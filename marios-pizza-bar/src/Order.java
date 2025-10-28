@@ -16,7 +16,7 @@ public class Order {
         READY,
         PICKED_UP
     }
-*/
+    */
 /*
 Kig færdig på det her, hvordan får jeg stadard pickup til at være 20 min fra nu, og derefter kunne ændre det selv
 if de efterfølgende cunstructors??

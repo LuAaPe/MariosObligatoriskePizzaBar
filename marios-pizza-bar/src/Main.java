@@ -7,36 +7,6 @@ public class Main {
         Menu menu = buildMenu();
         mainMenu(scanner, orderList, menu);
 
-
-
-/*
-        System.out.println("Menu");
-        System.out.println(menu);
-
-
-        Order john = new Order(1, "John,","22939345" );
-        OrderLine linje1 = new OrderLine(2,p23);
-        OrderLine linje2 = new OrderLine(3,p3);
-        john.addOrderLine(linje1);
-        john.addOrderLine(linje2);
-        System.out.println(john);
-
-
-        Order lucas = new Order(2, "Lucas,","22939345" );
-        OrderLine linje3 = new OrderLine(2,p13);
-        OrderLine linje4 = new OrderLine(3,p5);
-        lucas.addOrderLine(linje3);
-        lucas.addOrderLine(linje4);
-        System.out.println(lucas);
-/*
-        Order order1 = new Order();
-        order1.add(new OrderLine(2, p1));
-
-
-        orderList.add(order1);
-*/
-
-
     }
 
     private static Menu buildMenu() {
@@ -111,6 +81,7 @@ public class Main {
         while (true) {
             System.out.println("Vælg en mulighed:");
             System.out.println("1. Vis menu");
+            System.out.println();
             System.out.println("9. Afslut");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -133,6 +104,5 @@ public class Main {
 }
 /*Mangler at få implementeret at kunder bliver oprettet og tilføjet til arkivet ved bestilling
 Har ikke rigtig fået kigget på menum, synes det er underligt at tilføje alle pizza i MAIN, hvad skal der gøres her(ny klasse)
-
 
  */
