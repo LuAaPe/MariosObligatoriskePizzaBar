@@ -129,4 +129,5 @@ public class Main {
 /*Mangler at få implementeret at kunder bliver oprettet og tilføjet til arkivet ved bestilling
 Har ikke rigtig fået kigget på menum, synes det er underligt at tilføje alle pizza i MAIN, hvad skal der gøres her(ny klasse)
 
+
  */
