@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -41,6 +42,21 @@ public class OrderList {
 
         return historicOrders;
     }
+
+    public double getTotalRevenue(){
+        ArrayList<Order> totalRevenue = new ArrayList<>();
+        for (Order o : orders){
+            if (o.isReady()){
+                totalRevenue.add(o);
+            }
+        }
+        double totalSumOfAllSoldPizza = 0;
+        for (Order c : totalRevenue){
+            totalSumOfAllSoldPizza += c.getTotalCostOfOrder();
+        }
+        return totalSumOfAllSoldPizza;
+    }
+
 
     /*
     public ArrayList<Order> getOrdersByCustomer(){

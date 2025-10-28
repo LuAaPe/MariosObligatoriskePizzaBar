@@ -11,23 +11,18 @@ public class Pizza {
         this.price = price;
     }
 
+    //Getters
     public int getID() {
         return id;
     }
-
     public String[] getIngredients() {
         return ingredients;
     }
-
-
     public String getName() {
         return name;
     }
-
-
     public double getPrice() {
         return price;
-
     }
 
     public String ingredientsToString() {
