@@ -85,7 +85,8 @@ if de efterfølgende cunstructors??
 
     @Override
     public String toString() {
-        String s = "OrdreNr: " + orderNr + "\n";
+        String s = "Ordre Nr: " + orderNr + "\n" +
+                "Afhentning kl: " + getPickUpTime() + "\n";
         for (OrderLine line : lines) {
             s += line + "\n";
         }
