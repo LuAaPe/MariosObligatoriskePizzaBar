@@ -6,10 +6,10 @@ public class Order {
     private static int nextId = 1;
     private final int orderNr;
     private Customer customer;
-    private ArrayList<OrderLine> lines;
+    private final ArrayList<OrderLine> lines = new ArrayList<>();
     private LocalTime pickUpTime;
-    private final LocalDateTime createdAt;
-    private boolean isReady;
+    private final LocalDateTime createdAt = LocalDateTime.now();;
+    private boolean isReady = false;
     /*    private enum status{
         NOT_READY,
         READY,
@@ -21,19 +21,28 @@ Kig færdig på det her, hvordan får jeg stadard pickup til at være 20 min fra
 if de efterfølgende cunstructors??
  */
 
+    //Standard afhentningstid
+    public Order(Customer customer)  {
+        this.orderNr = nextId++;
+        this.pickUpTime = LocalTime.now().plusMinutes(20);
+        this.customer = customer;
+    }
 
-
+    //Bruger defineret afhmentningstid
     public Order(LocalTime pickUpTime, Customer customer)  {
         this.orderNr = nextId++;
-        this.lines = new ArrayList<>();
         this.pickUpTime = pickUpTime;
         this.customer = customer;
-        this.createdAt = LocalDateTime.now();
-        this.isReady = false;
     }
 
     //Tilføj ordre linje
     public void addProduct(int quantity, Pizza pizza){
+        if(pizza == null){
+            throw new IllegalArgumentException("Fejl i indtastning Pizza findes ikke");
+        }
+        if (quantity <= 0){
+            throw new IllegalArgumentException("Ikke muligt at tilføje negativt antal pizzer til ordre");
+        }
         lines.add(new OrderLine(quantity, pizza));
 
     }
