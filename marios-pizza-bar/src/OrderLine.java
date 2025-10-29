@@ -7,8 +7,8 @@ public class OrderLine {
         this.pizza = pizza;
     }
 
-    public double getPrice() {
-        return pizza.getPrice();
+    public double getPriceForOrderLine() {
+        return pizza.getPrice() * quantity;
     }
 
     public String getPizzaName() {
@@ -24,6 +24,6 @@ public class OrderLine {
     }
 
     public String toString(){
-        return quantity + " x " + pizza.getName();
+        return quantity + " x " + pizza.getName() + ": " + getPriceForOrderLine() + "kr,-";
     }
 }

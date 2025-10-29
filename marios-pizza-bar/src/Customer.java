@@ -9,12 +9,16 @@ public class Customer {
     private ArrayList<Order> customerOrders = new ArrayList<>();
 
     //CONSTRUCTORE
-    public Customer(String name, String phoneNumber) {
+    public Customer(String phoneNumber){
+        this.name = null;
+        this.phoneNumber = phoneNumber;
+    }
+    public Customer(String phoneNumber, String name) {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    //test!!
+
     public void addCustomerOrder(Order o){
         customerOrders.add(o);
     }

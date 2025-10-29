@@ -6,7 +6,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         OrderList orderList = new OrderList();
         Menu menu = buildMenu();
-        mainMenu(scanner, orderList, menu);
+        CustomerArchive customerList = new CustomerArchive();
+        mainMenu(scanner, orderList, menu, customerList);
 
     }
 
@@ -78,18 +79,9 @@ public class Main {
         return menu;
     }
 
-    private static void mainMenu(Scanner scanner, OrderList orderList, Menu menu) {
+    private static void mainMenu(Scanner scanner, OrderList orderList, Menu menu, CustomerArchive customerList) {
         while (true) {
-            System.out.println("Vælg en mulighed:");
-            System.out.println("1. Vis menu");
-            System.out.println("2. Opret ordre");
-            System.out.println("3. Vis aktive ordre");
-            System.out.println("4. Vis tidligere ordre");
-            System.out.println("5. Ændre pris på Pizzaer på menu");
-            System.out.println("6. Vis dagens omsætning");
-            System.out.println("7. ");
-            System.out.println("8. V");
-            System.out.println("9. Afslut");
+            mainMenuChoices();
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -99,11 +91,25 @@ public class Main {
                     scanner.nextLine();
                     break;
                 case 2:
-                    createOrder(scanner, orderList, menu);
+                    createOrder(scanner, orderList, menu, customerList);
                     break;
                 case 3:
                     System.out.println(orderList.activeOrdersToString());
                     break;
+                case 4:
+                    System.out.println(orderList.historicOrdersToString());
+                    break;
+                case 5:
+                    changePriceOfPizza(scanner, menu);
+                    break;
+                case 6:
+                    System.out.println("Der er i dag omsat for: " + orderList.getTotalRevenue() + "DKK");
+                    break;
+                case 7:
+                    finishOrder(scanner,orderList);
+                    break;
+                case 8:
+                    System.out.println(orderList.getTotalNrOfSoldPizzaPrPizza());
                 case 9:
                     System.out.println("Afslutter...");
                     scanner.close();
@@ -115,13 +121,38 @@ public class Main {
         }
     }
 
-    public static void createOrder(Scanner scanner, OrderList orderList, Menu menu) {
+    private static void mainMenuChoices(){
+        System.out.println("Vælg en mulighed:");
+        System.out.println("1. Vis menu");
+        System.out.println("2. Opret ordre");
+        System.out.println("3. Vis aktive ordre");
+        System.out.println("4. Vis tidligere ordre");
+        System.out.println("5. Ændre pris på Pizzaer på menu");
+        System.out.println("6. Vis dagens omsætning");
+        System.out.println("7. Afslut ordre");
+        System.out.println("8. Statistik");
+        System.out.println("9. Afslut");
+    }
+
+    private static void createOrder(Scanner scanner, OrderList orderList, Menu menu, CustomerArchive customerList) {
         System.out.println("Indtast afhentningstidpunkt (Timer:Minutter)");
         String time = scanner.nextLine();
         LocalTime pickUpTime = LocalTime.parse(time);
         System.out.println("Indtast telefon Nr.");
         String phoneNr = scanner.nextLine();
-        Order order = new Order(pickUpTime, phoneNr);
+        Order order;
+        Customer knowCustomer = customerList.findByPhoneNumber(phoneNr);
+        if (knowCustomer == null){
+            Customer customer = new Customer(phoneNr);
+            order = new Order(pickUpTime, customer);
+        } else {
+            order = new Order(pickUpTime, knowCustomer);
+        }
+        createOrderLine(scanner,order,menu);
+        System.out.println(order);
+        orderList.addOrder(order);
+    }
+    private static void createOrderLine(Scanner scanner, Order order, Menu menu){
         while (true) {
             System.out.println("Indtast pizza nummer:");
             int pizzaId = scanner.nextInt();
@@ -136,12 +167,18 @@ public class Main {
                 break;
             }
         }
-        System.out.println(order);
-        orderList.addOrder(order);
+    }
+    private static void changePriceOfPizza(Scanner scanner, Menu menu){
+        System.out.println("Indtast nr på pizza du ønsker at ændre prisen på");
+        int pizzaNr = scanner.nextInt();
+        Pizza pizza = menu.findPizzaById(pizzaNr);
+        System.out.println("Hvad skal prisen ændres til?");
+        double newPrice = scanner.nextInt();
+        pizza.setPrice(newPrice);
+    }
+    private static void finishOrder(Scanner scanner, OrderList orderList){
+        System.out.println("Indtast nr på den order, du ønsker at færdiggøre");
+        int orderId = scanner.nextInt();
+        orderList.completeOrder(orderId);
     }
 }
-/*Mangler at få implementeret at kunder bliver oprettet og tilføjet til arkivet ved bestilling
-Har ikke rigtig fået kigget på menum, synes det er underligt at tilføje alle pizza i MAIN, hvad skal der gøres her(ny klasse)
-
-
- */

@@ -1,11 +1,10 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class OrderList {
     private final ArrayList<Order> orders;
 
-    public OrderList(){
+    public OrderList() {
         this.orders = new ArrayList<>();
     }
 
@@ -15,7 +14,7 @@ public class OrderList {
 
     public Order findOrderById(int id) {
         for (Order order : orders) {
-            if (order.getId() == id) {
+            if (order.getOrderNr() == id) {
                 return order;
             }
         }
@@ -36,7 +35,6 @@ public class OrderList {
     }
 
 
-
     public ArrayList<Order> getHistoricOrders() {
         ArrayList<Order> historicOrders = new ArrayList<>();
         for (Order order : orders) {
@@ -44,43 +42,40 @@ public class OrderList {
                 historicOrders.add(order);
             }
         }
-        historicOrders.sort(Comparator.comparing(Order::getPickUpTime));
-
         return historicOrders;
     }
 
-    private String orderlistToString(ArrayList<Order> orders){
-        String s = "";
-        for (Order order : orders){
-            s += order + "\n";
-        }
-        return s;
-    }
-
-    public String activeOrdersToString(){
+    public String activeOrdersToString() {
         return orderlistToString(getActiveOrders());
     }
 
-    public String historicOrdersToString(){
+    public String historicOrdersToString() {
         return orderlistToString(getHistoricOrders());
     }
 
-    public double getTotalRevenue(){
+    public double getTotalRevenue() {
         double totalSumOfAllSoldPizza = 0;
-        for (Order order : getHistoricOrders()){
+        for (Order order : getHistoricOrders()) {
             totalSumOfAllSoldPizza += order.getTotalCostOfOrder();
         }
         return totalSumOfAllSoldPizza;
     }
 
 
-    /*
-    public ArrayList<Order> getOrdersByCustomer(){
-        for(Order o : orders){
-
+    public String getTotalNrOfSoldPizzaPrPizza() {
+        int[] amount = new int[30];
+        for (Order order : getHistoricOrders()) {
+            for (OrderLine orderLine : order.getLines()) {
+                amount[orderLine.getPizzaId()-1] += orderLine.getQuantity();
+            }
         }
+        String myStr ="";
+        for(int i = 1; i < amount.length+1; i++) {
+            myStr += "Der er solgt: " + amount[i-1] + "x Nr. " + i+"\n";
+        }
+        return myStr;
     }
-*/
+
 
 
     public boolean completeOrder(int id) {
@@ -105,5 +100,13 @@ public class OrderList {
         }
         return true;
 
+    }
+
+    private String orderlistToString(ArrayList<Order> orders) {
+        String s = "";
+        for (Order order : orders) {
+            s += order + "\n";
+        }
+        return s;
     }
 }

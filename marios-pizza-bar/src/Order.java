@@ -1,17 +1,15 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Order {
     private static int nextId = 1;
-    private final int id;
+    private final int orderNr;
     private Customer customer;
     private ArrayList<OrderLine> lines;
     private LocalTime pickUpTime;
     private final LocalDateTime createdAt;
     private boolean isReady;
-    private final String customerPhoneNr;
     /*    private enum status{
         NOT_READY,
         READY,
@@ -23,11 +21,13 @@ Kig færdig på det her, hvordan får jeg stadard pickup til at være 20 min fra
 if de efterfølgende cunstructors??
  */
 
-    public Order(LocalTime pickUpTime, String customerPhoneNr)  {
-        this.id = nextId++;
+
+
+    public Order(LocalTime pickUpTime, Customer customer)  {
+        this.orderNr = nextId++;
         this.lines = new ArrayList<>();
         this.pickUpTime = pickUpTime;
-        this.customerPhoneNr = customerPhoneNr;
+        this.customer = customer;
         this.createdAt = LocalDateTime.now();
         this.isReady = false;
     }
@@ -42,18 +42,17 @@ if de efterfølgende cunstructors??
     public double getTotalCostOfOrder(){
         double totalSum = 0;
         for (OrderLine line : lines){
-            totalSum += line.getPrice() * line.getQuantity();
+            totalSum += line.getPriceForOrderLine();
         }
         return totalSum;
     }
-
 
     //GETTERS
     public Customer getCustomer() {
         return customer;
     }
-    public int getId(){
-        return id;
+    public int getOrderNr(){
+        return orderNr;
     }
     public LocalTime getPickUpTime() {
         return pickUpTime;
@@ -64,7 +63,14 @@ if de efterfølgende cunstructors??
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+    public ArrayList<OrderLine> getLines(){
+        return lines;
+    }
+    /*public String getCustomerPhoneNr() {
+        return customerPhoneNr;
+    }
 
+     */
 
     //SETTERS
     public void setReady(boolean ready) {
@@ -73,21 +79,16 @@ if de efterfølgende cunstructors??
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
     public void setPickUpTime(LocalTime pickUpTime) {
         this.pickUpTime = pickUpTime;
     }
 
     @Override
     public String toString() {
-        String s = "id " + id + "\n";
+        String s = "OrdreNr: " + orderNr + "\n";
         for (OrderLine line : lines) {
             s += line + "\n";
         }
         return s;
-    }
-
-    public String getCustomerPhoneNr() {
-        return customerPhoneNr;
     }
 }
