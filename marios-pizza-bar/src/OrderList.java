@@ -76,12 +76,11 @@ public class OrderList {
             System.out.println("Ordren er allerede sat som færdig");
             return;
         } else if (order.getCustomer() != null) {
-            Customer customer = order.getCustomer();
             System.out.println("Ordren fjernet fra kø og tilføjet til færdige ordre");
             System.out.println("Ordren er tilføjet til kundens profil");
             order.setReady(true);
-            customer.addCustomerOrder(order);
-            customer.registerPurchase(order.getTotalCostOfOrder());
+            order.getCustomer().addCustomerOrder(order);
+            order.getCustomer().registerPurchase(order.getTotalCostOfOrder());
             return;
         } else {
             order.setReady(true);

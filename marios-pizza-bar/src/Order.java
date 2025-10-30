@@ -6,6 +6,7 @@ public class Order {
     private static int nextId = 1;
     private final int orderNr;
     private Customer customer;
+    private double discount;
     private final ArrayList<OrderLine> lines = new ArrayList<>();
     private LocalTime pickUpTime;
     private final LocalDateTime createdAt = LocalDateTime.now();
@@ -23,11 +24,12 @@ if de efterfølgende cunstructors??
         this.customer = customer;
     }
 
-    //Bruger defineret afhmentningstid
+    //Bruger defineret afhentningstid
     public Order(LocalTime pickUpTime, Customer customer) {
         this.orderNr = nextId++;
         this.pickUpTime = pickUpTime;
         this.customer = customer;
+        this.discount = customer.getDiscount();
     }
 
     //Tilføj ordre linje
@@ -47,7 +49,7 @@ if de efterfølgende cunstructors??
         for (OrderLine line : lines) {
             totalSum += line.getPriceForOrderLine();
         }
-        return totalSum;
+        return totalSum * discount;
     }
 
     //GETTERS
@@ -100,6 +102,6 @@ if de efterfølgende cunstructors??
         for (OrderLine line : lines) {
             s += line + "\n";
         }
-        return s;
+        return s + "samlede pris: " +getTotalCostOfOrder();
     }
 }

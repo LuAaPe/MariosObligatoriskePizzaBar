@@ -55,4 +55,11 @@ public class Customer {
     public ArrayList<Order> getCustomerOrders() {
         return customerOrders;
     }
+
+    public double getDiscount(){
+        if (orderCount >= 1){
+            return 0.9;
+        }
+        return 1.0;
+    }
 }
