@@ -1,6 +1,6 @@
 public class Pizza {
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
     private String[] ingredients;
     private double price;
 

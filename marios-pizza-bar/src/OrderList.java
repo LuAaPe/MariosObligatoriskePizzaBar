@@ -86,8 +86,6 @@ public class OrderList {
             order.setReady(true);
             System.out.println("Ordren fjernet fra kø og tilføjet til færdige ordre");
         }
-        return;
-
     }
 
     public String activeOrdersToString() {

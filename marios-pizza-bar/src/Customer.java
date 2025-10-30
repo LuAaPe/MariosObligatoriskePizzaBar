@@ -6,7 +6,7 @@ public class Customer {
     private final String phoneNumber;
     private int orderCount;
     private double totalSpent;
-    private ArrayList<Order> customerOrders = new ArrayList<>();
+    private final ArrayList<Order> customerOrders = new ArrayList<>();
 
     //CONSTRUCTORE
     public Customer(String phoneNumber) {
@@ -39,23 +39,18 @@ public class Customer {
     public String getName() {
         return name;
     }
-
     public int getOrderCount() {
         return orderCount;
     }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
     public double getTotalSpent() {
         return totalSpent;
     }
-
     public ArrayList<Order> getCustomerOrders() {
         return customerOrders;
     }
-
     public double getDiscount(){
         if (orderCount >= 1){
             return 0.9;
