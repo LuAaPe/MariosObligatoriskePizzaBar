@@ -34,7 +34,7 @@ public class Pizza {
             if (i == ingredients.length - 1) {
                 ingredient += ingredients[i];
             } else {
-                ingredient += ingredients[i] + ", ";
+                ingredient += ingredients[i] + ",";
 
             }
         }
@@ -48,7 +48,7 @@ public class Pizza {
 
     @Override
     public String toString() {
-        return String.format("%-80s", id + ". " + name + " (" + ingredientsToString() + ")") + String.format("%.2f",price) + "kr";
+        return String.format("%-4s",id + ". ") + String.format("%-80s",name + " (" + ingredientsToString() + ")").replace(" ",".") + String.format("%6.2f",price) + "kr,-";
     }
 }
 

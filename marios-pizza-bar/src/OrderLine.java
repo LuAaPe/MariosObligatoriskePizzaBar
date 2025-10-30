@@ -26,6 +26,6 @@ public class OrderLine {
     }
 
     public String toString() {
-        return quantity + " x " + pizza.getName() + ": " + getPriceForOrderLine() + "kr,-";
+        return quantity + " x " + getPizzaName() + ": " + pizzaPrice + "kr,-";
     }
 }

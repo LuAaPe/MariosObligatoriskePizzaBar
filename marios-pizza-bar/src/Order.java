@@ -97,6 +97,6 @@ if de efterfølgende cunstructors??
         for (OrderLine line : lines) {
             s += line + "\n";
         }
-        return s + "samlede pris: " + getTotalCostOfOrder();
+        return s + "---------------------------\nSamlede pris: " + String.format("%.2f",getTotalCostOfOrder())+ " kr" + "\n###########################";
     }
 }
