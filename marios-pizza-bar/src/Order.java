@@ -9,7 +9,6 @@ public class Order {
     private final ArrayList<OrderLine> lines = new ArrayList<>();
     private LocalTime pickUpTime;
     private final LocalDateTime createdAt = LocalDateTime.now();
-    ;
     private boolean isReady = false;
 
 /*

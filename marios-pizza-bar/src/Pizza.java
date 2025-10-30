@@ -43,7 +43,7 @@ public class Pizza {
 
     public void setPrice(double price) {
         this.price = price;
-        System.out.println("Prisen for " + name + "er nu sat til" + price + " kr");
+        System.out.println("Prisen for " + name + " er nu sat til" + price + " kr");
     }
 
     @Override

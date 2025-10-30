@@ -14,7 +14,10 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public Customer(String phoneNumber, String name) {
+    public Customer(String name, String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isBlank()){
+            throw new IllegalArgumentException("Indtast også et telefon nr.");
+        }
         this.name = name;
         this.phoneNumber = phoneNumber;
     }

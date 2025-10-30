@@ -87,7 +87,6 @@ public class Main {
             }
         }
     }
-
     private static void mainMenuChoices() {
         System.out.println("Vælg en mulighed:");
         System.out.println("1. Vis menu");
@@ -107,6 +106,12 @@ public class Main {
         LocalTime pickUpTime = LocalTime.parse(time);
         System.out.println("Indtast telefon Nr.");
         String phoneNr = scanner.nextLine();
+        if ((phoneNr.length() != 8) && (phoneNr.length() != 11)){
+            throw new IllegalArgumentException("Fejl: Indtast et telon nr på 8 eller 11 cifre\n " +
+                    "8 Cifre: 12345678\n" +
+                    "11 Cifre: +4512345678");
+
+        }
         Order order;
         Customer knowCustomer = customerList.findByPhoneNumber(phoneNr);
         if (knowCustomer == null) {
@@ -124,6 +129,9 @@ public class Main {
         while (true) {
             System.out.println("Indtast pizza nummer:");
             int pizzaId = scanner.nextInt();
+            if (pizzaId < 1 || pizzaId > 30){
+                throw new IllegalArgumentException("Fejl: indtast et tal mellem 1-30");
+            }
             scanner.nextLine();
             System.out.println("Indtast antal:");
             int quantity = scanner.nextInt();
@@ -140,15 +148,25 @@ public class Main {
     private static void changePriceOfPizza(Scanner scanner, Menu menu) {
         System.out.println("Indtast nr på pizza du ønsker at ændre prisen på");
         int pizzaNr = scanner.nextInt();
+        if (pizzaNr > 30 || pizzaNr < 1){
+            throw new IllegalArgumentException("Fejl: indtast et nr mellem 1-30");
+        }
         Pizza pizza = menu.findPizzaById(pizzaNr);
         System.out.println("Hvad skal prisen ændres til?");
         double newPrice = scanner.nextDouble();
+        if (newPrice < 0 || newPrice > 250){
+            throw new IllegalArgumentException("Fejl: Indtast beløb mellem 0 - 250");
+        }
         pizza.setPrice(newPrice);
     }
 
     private static void finishOrder(Scanner scanner, OrderList orderList) {
         System.out.println("Indtast nr på den order, du ønsker at færdiggøre");
         int orderId = scanner.nextInt();
+        Order orderToFinish = orderList.findOrderById(orderId);
+        if (orderToFinish == null){
+            throw new IllegalArgumentException("Fejl: Ugyldigt ordre nr.");
+        }
         orderList.completeOrder(orderId);
     }
 }
