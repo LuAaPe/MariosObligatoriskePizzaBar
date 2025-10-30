@@ -76,11 +76,6 @@ if de efterfølgende cunstructors??
     public ArrayList<OrderLine> getLines() {
         return lines;
     }
-    /*public String getCustomerPhoneNr() {
-        return customerPhoneNr;
-    }
-
-     */
 
     //SETTERS
     public void setReady(boolean ready) {
@@ -102,6 +97,6 @@ if de efterfølgende cunstructors??
         for (OrderLine line : lines) {
             s += line + "\n";
         }
-        return s + "samlede pris: " +getTotalCostOfOrder();
+        return s + "samlede pris: " + getTotalCostOfOrder();
     }
 }

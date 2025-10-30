@@ -79,8 +79,7 @@ public class OrderList {
             System.out.println("Ordren fjernet fra kø og tilføjet til færdige ordre");
             System.out.println("Ordren er tilføjet til kundens profil");
             order.setReady(true);
-            order.getCustomer().addCustomerOrder(order);
-            order.getCustomer().registerPurchase(order.getTotalCostOfOrder());
+            order.getCustomer().registerPurchase(order);
             return;
         } else {
             order.setReady(true);

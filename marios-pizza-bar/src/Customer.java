@@ -22,16 +22,11 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-
-    public void addCustomerOrder(Order o) {
-        customerOrders.add(o);
-    }
-
-
     //Mangler at udvide denne klasse til at fungere korrekt
-    public void registerPurchase(double amount) {
+    public void registerPurchase(Order order) {
         orderCount++;
-        totalSpent += amount;
+        totalSpent += order.getTotalCostOfOrder();
+        customerOrders.add(order);
     }
 
 

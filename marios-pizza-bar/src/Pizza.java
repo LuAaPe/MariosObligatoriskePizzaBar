@@ -48,7 +48,7 @@ public class Pizza {
 
     @Override
     public String toString() {
-        return String.format("%-80s", id + ". " + name + " (" + ingredientsToString() + ")") + price + "kr";
+        return String.format("%-80s", id + ". " + name + " (" + ingredientsToString() + ")") + String.format("%.2f",price) + "kr";
     }
 }
 
