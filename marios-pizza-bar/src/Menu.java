@@ -13,16 +13,16 @@ public class Menu {
     }
 
     //Metode til at få pizza via Id, så pizza kan tilføjes til nemmere
-    public Pizza findPizzaById(int id){
-        for (Pizza pizza : menu){
-            if (id == pizza.getID()){
+    public Pizza findPizzaById(int id) {
+        for (Pizza pizza : menu) {
+            if (id == pizza.getID()) {
                 return pizza;
             }
         }
         return null;
     }
 
-    public String toString(){
+    public String toString() {
         String s = "";
         for (Pizza pizza : menu) {
             s += pizza + "\n";

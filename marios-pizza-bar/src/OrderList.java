@@ -28,7 +28,6 @@ public class OrderList {
                 currentActive.add(order);
             }
         }
-
         currentActive.sort(Comparator.comparing(Order::getPickUpTime));
 
         return currentActive;
@@ -45,14 +44,6 @@ public class OrderList {
         return historicOrders;
     }
 
-    public String activeOrdersToString() {
-        return orderlistToString(getActiveOrders());
-    }
-
-    public String historicOrdersToString() {
-        return orderlistToString(getHistoricOrders());
-    }
-
     public double getTotalRevenue() {
         double totalSumOfAllSoldPizza = 0;
         for (Order order : getHistoricOrders()) {
@@ -66,26 +57,24 @@ public class OrderList {
         int[] amount = new int[30];
         for (Order order : getHistoricOrders()) {
             for (OrderLine orderLine : order.getLines()) {
-                amount[orderLine.getPizzaId()-1] += orderLine.getQuantity();
+                amount[orderLine.getPizzaId() - 1] += orderLine.getQuantity();
             }
         }
-        String myStr ="";
-        for(int i = 1; i < amount.length+1; i++) {
-            myStr += "Der er solgt: " + amount[i-1] + "x Nr. " + i+"\n";
+        String myStr = "";
+        for (int i = 1; i < amount.length + 1; i++) {
+            myStr += "Der er solgt: " + amount[i - 1] + "x Nr. " + i + "\n";
         }
         return myStr;
     }
 
-
-
-    public boolean completeOrder(int id) {
+    public void completeOrder(int id) {
         Order order = findOrderById(id);
         if (order == null) {
             System.out.println("Ordre ikke fundet");
-            return false;
+            return;
         } else if (order.isReady()) {
             System.out.println("Ordren er allerede sat som færdig");
-            return false;
+            return;
         } else if (order.getCustomer() != null) {
             Customer customer = order.getCustomer();
             System.out.println("Ordren fjernet fra kø og tilføjet til færdige ordre");
@@ -93,13 +82,21 @@ public class OrderList {
             order.setReady(true);
             customer.addCustomerOrder(order);
             customer.registerPurchase(order.getTotalCostOfOrder());
-            return true;
+            return;
         } else {
             order.setReady(true);
             System.out.println("Ordren fjernet fra kø og tilføjet til færdige ordre");
         }
-        return true;
+        return;
 
+    }
+
+    public String activeOrdersToString() {
+        return orderlistToString(getActiveOrders());
+    }
+
+    public String historicOrdersToString() {
+        return orderlistToString(getHistoricOrders());
     }
 
     private String orderlistToString(ArrayList<Order> orders) {

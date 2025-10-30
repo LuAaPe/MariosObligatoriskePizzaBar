@@ -15,12 +15,15 @@ public class Pizza {
     public int getID() {
         return id;
     }
+
     public String[] getIngredients() {
         return ingredients;
     }
+
     public String getName() {
         return name;
     }
+
     public double getPrice() {
         return price;
     }
@@ -37,14 +40,15 @@ public class Pizza {
         }
         return ingredient;
     }
-    public void setPrice(double price){
+
+    public void setPrice(double price) {
         this.price = price;
-        System.out.println("Prisen for " + name + "er nu sat til" + price + "kr");
+        System.out.println("Prisen for " + name + "er nu sat til" + price + " kr");
     }
 
     @Override
     public String toString() {
-        return String.format("%-80s", id + ". " + name + " (" + ingredientsToString() +")") + price + "kr";
+        return String.format("%-80s", id + ". " + name + " (" + ingredientsToString() + ")") + price + "kr";
     }
 }
 

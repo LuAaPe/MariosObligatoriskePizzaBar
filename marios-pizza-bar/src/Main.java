@@ -8,7 +8,6 @@ public class Main {
         Menu menu = buildMenu();
         CustomerArchive customerList = new CustomerArchive();
         mainMenu(scanner, orderList, menu, customerList);
-
     }
 
     private static Menu buildMenu() {
@@ -56,16 +55,15 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.println(menu);
-                    scanner.nextLine();
                     break;
                 case 2:
                     createOrder(scanner, orderList, menu, customerList);
                     break;
                 case 3:
-                    System.out.println(orderList.activeOrdersToString());
+                    System.out.print(orderList.activeOrdersToString());
                     break;
                 case 4:
-                    System.out.println(orderList.historicOrdersToString());
+                    System.out.print(orderList.historicOrdersToString());
                     break;
                 case 5:
                     changePriceOfPizza(scanner, menu);
@@ -74,10 +72,11 @@ public class Main {
                     System.out.println("Der er i dag omsat for: " + orderList.getTotalRevenue() + "DKK");
                     break;
                 case 7:
-                    finishOrder(scanner,orderList);
+                    finishOrder(scanner, orderList);
                     break;
                 case 8:
                     System.out.println(orderList.getTotalNrOfSoldPizzaPrPizza());
+                    break;
                 case 9:
                     System.out.println("Afslutter...");
                     scanner.close();
@@ -89,7 +88,7 @@ public class Main {
         }
     }
 
-    private static void mainMenuChoices(){
+    private static void mainMenuChoices() {
         System.out.println("Vælg en mulighed:");
         System.out.println("1. Vis menu");
         System.out.println("2. Opret ordre");
@@ -110,17 +109,18 @@ public class Main {
         String phoneNr = scanner.nextLine();
         Order order;
         Customer knowCustomer = customerList.findByPhoneNumber(phoneNr);
-        if (knowCustomer == null){
-            Customer customer = new Customer(phoneNr);
-            order = new Order(pickUpTime, customer);
+        if (knowCustomer == null) {
+            Customer newCustomer = new Customer(phoneNr);
+            order = new Order(pickUpTime, newCustomer);
         } else {
             order = new Order(pickUpTime, knowCustomer);
         }
-        createOrderLine(scanner,order,menu);
+        createOrderLine(scanner, order, menu);
         System.out.println(order);
         orderList.addOrder(order);
     }
-    private static void createOrderLine(Scanner scanner, Order order, Menu menu){
+
+    private static void createOrderLine(Scanner scanner, Order order, Menu menu) {
         while (true) {
             System.out.println("Indtast pizza nummer:");
             int pizzaId = scanner.nextInt();
@@ -131,20 +131,22 @@ public class Main {
             order.addProduct(quantity, menu.findPizzaById(pizzaId));
             System.out.println("Tast \"1\" for at tilføje mere eller tast \"-1\" for at afslutte");
             int addMore = scanner.nextInt();
-            if (addMore == -1){
+            if (addMore == -1) {
                 break;
             }
         }
     }
-    private static void changePriceOfPizza(Scanner scanner, Menu menu){
+
+    private static void changePriceOfPizza(Scanner scanner, Menu menu) {
         System.out.println("Indtast nr på pizza du ønsker at ændre prisen på");
         int pizzaNr = scanner.nextInt();
         Pizza pizza = menu.findPizzaById(pizzaNr);
         System.out.println("Hvad skal prisen ændres til?");
-        double newPrice = scanner.nextInt();
+        double newPrice = scanner.nextDouble();
         pizza.setPrice(newPrice);
     }
-    private static void finishOrder(Scanner scanner, OrderList orderList){
+
+    private static void finishOrder(Scanner scanner, OrderList orderList) {
         System.out.println("Indtast nr på den order, du ønsker at færdiggøre");
         int orderId = scanner.nextInt();
         orderList.completeOrder(orderId);

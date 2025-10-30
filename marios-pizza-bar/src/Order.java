@@ -8,49 +8,44 @@ public class Order {
     private Customer customer;
     private final ArrayList<OrderLine> lines = new ArrayList<>();
     private LocalTime pickUpTime;
-    private final LocalDateTime createdAt = LocalDateTime.now();;
+    private final LocalDateTime createdAt = LocalDateTime.now();
+    ;
     private boolean isReady = false;
-    /*    private enum status{
-        NOT_READY,
-        READY,
-        PICKED_UP
-    }
-    */
+
 /*
 Kig færdig på det her, hvordan får jeg stadard pickup til at være 20 min fra nu, og derefter kunne ændre det selv
 if de efterfølgende cunstructors??
  */
 
     //Standard afhentningstid
-    public Order(Customer customer)  {
+    public Order(Customer customer) {
         this.orderNr = nextId++;
         this.pickUpTime = LocalTime.now().plusMinutes(20);
         this.customer = customer;
     }
 
     //Bruger defineret afhmentningstid
-    public Order(LocalTime pickUpTime, Customer customer)  {
+    public Order(LocalTime pickUpTime, Customer customer) {
         this.orderNr = nextId++;
         this.pickUpTime = pickUpTime;
         this.customer = customer;
     }
 
     //Tilføj ordre linje
-    public void addProduct(int quantity, Pizza pizza){
-        if(pizza == null){
+    public void addProduct(int quantity, Pizza pizza) {
+        if (pizza == null) {
             throw new IllegalArgumentException("Fejl i indtastning Pizza findes ikke");
         }
-        if (quantity <= 0){
+        if (quantity <= 0) {
             throw new IllegalArgumentException("Ikke muligt at tilføje negativt antal pizzer til ordre");
         }
         lines.add(new OrderLine(quantity, pizza));
-
     }
 
     //Samlet pris for alle ordre linjer
-    public double getTotalCostOfOrder(){
+    public double getTotalCostOfOrder() {
         double totalSum = 0;
-        for (OrderLine line : lines){
+        for (OrderLine line : lines) {
             totalSum += line.getPriceForOrderLine();
         }
         return totalSum;
@@ -60,19 +55,24 @@ if de efterfølgende cunstructors??
     public Customer getCustomer() {
         return customer;
     }
-    public int getOrderNr(){
+
+    public int getOrderNr() {
         return orderNr;
     }
+
     public LocalTime getPickUpTime() {
         return pickUpTime;
     }
+
     public boolean isReady() {
         return isReady;
     }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
-    public ArrayList<OrderLine> getLines(){
+
+    public ArrayList<OrderLine> getLines() {
         return lines;
     }
     /*public String getCustomerPhoneNr() {
@@ -85,9 +85,11 @@ if de efterfølgende cunstructors??
     public void setReady(boolean ready) {
         isReady = ready;
     }
+
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
     public void setPickUpTime(LocalTime pickUpTime) {
         this.pickUpTime = pickUpTime;
     }

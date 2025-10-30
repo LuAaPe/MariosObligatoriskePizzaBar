@@ -9,17 +9,18 @@ public class Customer {
     private ArrayList<Order> customerOrders = new ArrayList<>();
 
     //CONSTRUCTORE
-    public Customer(String phoneNumber){
+    public Customer(String phoneNumber) {
         this.name = null;
         this.phoneNumber = phoneNumber;
     }
+
     public Customer(String phoneNumber, String name) {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
 
-    public void addCustomerOrder(Order o){
+    public void addCustomerOrder(Order o) {
         customerOrders.add(o);
     }
 
@@ -35,15 +36,19 @@ public class Customer {
     public String getName() {
         return name;
     }
+
     public int getOrderCount() {
         return orderCount;
     }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
     public double getTotalSpent() {
         return totalSpent;
     }
+
     public ArrayList<Order> getCustomerOrders() {
         return customerOrders;
     }
