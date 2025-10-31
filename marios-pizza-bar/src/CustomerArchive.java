@@ -1,13 +1,12 @@
 import java.util.ArrayList;
 
 public class CustomerArchive {
-
     private ArrayList<Customer> customers = new ArrayList<>();
 
     public Customer findByPhoneNumber(String phoneNumber) {
-        for (Customer c : customers) {
-            if (c.getPhoneNumber().equals(phoneNumber)) {
-                return c;
+        for (Customer customer : customers) {
+            if (customer.getPhoneNumber().equals(phoneNumber)) {
+                return customer;
             }
         }
         return null;

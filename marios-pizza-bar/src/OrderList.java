@@ -62,7 +62,9 @@ public class OrderList {
         }
         String myStr = "";
         for (int i = 1; i < amount.length + 1; i++) {
-            myStr += "Der er solgt: " + amount[i - 1] + "x Nr. " + i + "\n";
+            if (amount[i - 1] != 0) {
+                myStr += "Der er solgt: " + amount[i - 1] + " x Nr. " + i + "\n";
+            }
         }
         return myStr;
     }

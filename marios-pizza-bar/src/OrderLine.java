@@ -25,7 +25,8 @@ public class OrderLine {
         return quantity;
     }
 
+    @Override
     public String toString() {
-        return quantity + " x " + getPizzaName() + ": " + pizzaPrice + "kr,-";
+        return String.format("%2s x %-20s %6.2f", quantity, getPizzaName() + ":", pizzaPrice) + "kr";
     }
 }

@@ -3,12 +3,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
         OrderList orderList = new OrderList();
-        Menu menu = buildMenu();
         CustomerArchive customerList = new CustomerArchive();
-        mainMenu(scanner, orderList, menu, customerList);
+        mainMenu(scanner, orderList, buildMenu(), customerList);
     }
 
     private static Menu buildMenu() {
@@ -49,82 +47,190 @@ public class Main {
 
     private static void mainMenu(Scanner scanner, OrderList orderList, Menu menu, CustomerArchive customerList) {
         while (true) {
-            mainMenuChoices();
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            try {
+                System.out.println("Vælg en mulighed:");
+                System.out.println("1. Menu");
+                System.out.println("2. Ordre");
+                System.out.println("3. Historik");
+                System.out.println("4. Afslut");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    System.out.println(menu);
-                    break;
-                case 2:
-                    createOrder(scanner, orderList, menu, customerList);
-                    break;
-                case 3:
-                    System.out.println(orderList.activeOrdersToString());
-                    break;
-                case 4:
-                    System.out.println(orderList.historicOrdersToString());
-                    break;
-                case 5:
-                    changePriceOfPizza(scanner, menu);
-                    break;
-                case 6:
-                    System.out.println("Der er i dag omsat for: " + orderList.getTotalRevenue() + "DKK");
-                    break;
-                case 7:
-                    finishOrder(scanner, orderList);
-                    break;
-                case 8:
-                    System.out.println(orderList.getTotalNrOfSoldPizzaPrPizza());
-                    break;
-                case 9:
-                    System.out.println("Afslutter...");
-                    scanner.close();
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Ugyldigt valg. Prøv igen.");
+                switch (choice) {
+                    case 1:
+                        menuMenu(scanner, menu);
+                        break;
+                    case 2:
+                        orderMenu(scanner, menu, orderList, customerList);
+                        break;
+                    case 3:
+                        historicMenu(scanner, orderList);
+                        break;
+                    case 4:
+                        System.out.println("Afslutter...");
+                        scanner.close();
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Ugyldigt valg. Prøv igen.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Fejl: Indtast venlist et tal");
+                scanner.nextLine();
             }
         }
     }
 
-    private static void mainMenuChoices() {
-        System.out.println("Vælg en mulighed:");
-        System.out.println("1. Vis menu");
-        System.out.println("2. Opret ordre");
-        System.out.println("3. Vis aktive ordre");
-        System.out.println("4. Vis tidligere ordre");
-        System.out.println("5. Ændre pris på Pizzaer på menu");
-        System.out.println("6. Vis dagens omsætning");
-        System.out.println("7. Afslut ordre");
-        System.out.println("8. Statistik");
-        System.out.println("9. Afslut");
+    private static void menuMenu(Scanner scanner, Menu menu) {
+        boolean isContinuing = true;
+        while (isContinuing) {
+            try {
+                System.out.println("Vælg en mulighed:");
+                System.out.println("1. Vis menu");
+                System.out.println("2. Ændrer pris på pizza");
+                System.out.println("3. Gå tilbage");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println(menu);
+                        isContinuing = false;
+                        break;
+                    case 2:
+                        changePriceOfPizza(scanner, menu);
+                        isContinuing = false;
+                        break;
+                    case 3:
+                        isContinuing = false;
+                        break;
+                    default:
+                        System.out.println("Ugyldigt valg. Prøv igen.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Fejl: indtast et tal");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private static void orderMenu(Scanner scanner, Menu menu, OrderList orderList, CustomerArchive customerList) {
+        boolean isContinuing = true;
+        while (isContinuing) {
+            try {
+                System.out.println("Vælg en mulighed:");
+                System.out.println("1. Opret ordre");
+                System.out.println("2. Vis aktive ordre");
+                System.out.println("3. Afslut ordre");
+                System.out.println("4. Gå tilbage");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        createOrder(scanner, orderList, menu, customerList);
+                        isContinuing = false;
+                        break;
+                    case 2:
+                        System.out.println(orderList.activeOrdersToString());
+                        isContinuing = false;
+                        break;
+                    case 3:
+                        finishOrder(scanner, orderList);
+                        isContinuing = false;
+                        break;
+                    case 4:
+                        isContinuing = false;
+                        break;
+                    default:
+                        System.out.println("Ugyldigt valg. Prøv igen.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Fejl: Indtast et tal");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    private static void historicMenu(Scanner scanner, OrderList orderList) {
+        boolean isContinuing = true;
+        while (isContinuing) {
+            try {
+                System.out.println("Vælg en mulighed:");
+                System.out.println("1. Vis tidligere ordre");
+                System.out.println("2. Vis dagens omsætning");
+                System.out.println("3. Vis statistik");
+                System.out.println("4. Gå tilbage");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println(orderList.historicOrdersToString());
+                        isContinuing = false;
+                        break;
+                    case 2:
+                        System.out.println("Der er i dag omsat for: " + String.format("%.2f", orderList.getTotalRevenue()) + "DKK");
+                        isContinuing = false;
+                        break;
+                    case 3:
+                        System.out.println(orderList.getTotalNrOfSoldPizzaPrPizza());
+                        isContinuing = false;
+                        break;
+                    case 4:
+                        isContinuing = false;
+                        break;
+                    default:
+                        System.out.println("Ugyldigt valg. Prøv igen.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Fejl: Indtast et tal");
+                scanner.nextLine();
+            }
+        }
     }
 
     private static void createOrder(Scanner scanner, OrderList orderList, Menu menu, CustomerArchive customerList) {
-        System.out.println("Indtast afhentningstidpunkt (Timer:Minutter)");
-        String time = scanner.nextLine();
-        LocalTime pickUpTime = LocalTime.parse(time);
-        System.out.println("Indtast telefon Nr.");
-        String phoneNr = scanner.nextLine();
-        if ((phoneNr.length() != 8) && (phoneNr.length() != 11)) {
-            throw new IllegalArgumentException("Fejl: Indtast et telon nr på 8 eller 11 cifre\n " +
-                    "8 Cifre: 12345678\n" +
-                    "11 Cifre: +4512345678");
-        }
-        Order order;
+        while (true) {
+            Order order;
+            System.out.println("Indtast telefon Nr.");
+            String phoneNr = scanner.nextLine().trim();
 
-        if (customerList.findByPhoneNumber(phoneNr) == null) {
-            Customer newCustomer = new Customer(phoneNr);
-            customerList.addCustomer(newCustomer);
-            order = new Order(pickUpTime, newCustomer);
-        } else {
-            order = new Order(pickUpTime, customerList.findByPhoneNumber(phoneNr));
+            if ((phoneNr.length() != 8) && (phoneNr.length() != 11)) {
+                System.out.println("Fejl: Indtast et telefon nr på 8 cifre eller 11 cifre");
+                System.out.println(" 8 cifre: 12345678");
+                System.out.println("11 cifre: +45 12345678");
+                continue;
+            }
+            Customer customer = customerList.findByPhoneNumber(phoneNr);
+            if (customer == null) {
+                customer = new Customer(phoneNr);
+                customerList.addCustomer(customer);
+            }
+            while (true) {
+                System.out.println("Specificer afhentningstidpunkt indtast tid(Timer:Minutter) ellers tryk enter");
+                String time = scanner.nextLine().trim();
+                LocalTime pickUpTime;
+                if (!time.isEmpty()) {
+                    try {
+                        pickUpTime = LocalTime.parse(time);
+                    } catch (Exception e) {
+                        System.out.println("Fejl: Ugyldigt tidsformat, brug HH:MM format, fx. 17:45");
+                        continue;
+                    }
+                    order = new Order(pickUpTime, customer);
+                    break;
+                } else {
+                    order = new Order(customer);
+                    break;
+                }
+            }
+
+            createOrderLine(scanner, order, menu);
+            System.out.println(order);
+            orderList.addOrder(order);
+            break;
         }
-        createOrderLine(scanner, order, menu);
-        System.out.println(order);
-        orderList.addOrder(order);
     }
 
     private static void createOrderLine(Scanner scanner, Order order, Menu menu) {

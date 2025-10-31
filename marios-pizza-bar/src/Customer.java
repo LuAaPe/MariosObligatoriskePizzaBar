@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 
 public class Customer {
-
-    private final String name;
     private final String phoneNumber;
     private int orderCount;
     private double totalSpent;
@@ -10,15 +8,9 @@ public class Customer {
 
     //CONSTRUCTORE
     public Customer(String phoneNumber) {
-        this.name = null;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Customer(String name, String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isBlank()){
             throw new IllegalArgumentException("Indtast også et telefon nr.");
         }
-        this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
@@ -31,9 +23,6 @@ public class Customer {
 
 
     //GETTERS
-    public String getName() {
-        return name;
-    }
     public int getOrderCount() {
         return orderCount;
     }

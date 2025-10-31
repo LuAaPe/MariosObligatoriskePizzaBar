@@ -16,10 +16,6 @@ public class Pizza {
         return id;
     }
 
-    public String[] getIngredients() {
-        return ingredients;
-    }
-
     public String getName() {
         return name;
     }
@@ -43,7 +39,7 @@ public class Pizza {
 
     public void setPrice(double price) {
         this.price = price;
-        System.out.println("Prisen for " + name + " er nu sat til" + price + " kr");
+        System.out.println("Prisen for " + name + " er nu sat til " + price + " kr");
     }
 
     @Override

@@ -9,19 +9,14 @@ public class Order {
     private double discount;
     private final ArrayList<OrderLine> lines = new ArrayList<>();
     private LocalTime pickUpTime;
-    private final LocalDateTime createdAt = LocalDateTime.now();
     private boolean isReady = false;
-
-/*
-Kig færdig på det her, hvordan får jeg stadard pickup til at være 20 min fra nu, og derefter kunne ændre det selv
-if de efterfølgende cunstructors??
- */
 
     //Standard afhentningstid
     public Order(Customer customer) {
         this.orderNr = nextId++;
         this.pickUpTime = LocalTime.now().plusMinutes(20);
         this.customer = customer;
+        this.discount = customer.getDiscount();
     }
 
     //Bruger defineret afhentningstid
@@ -69,10 +64,6 @@ if de efterfølgende cunstructors??
         return isReady;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
     public ArrayList<OrderLine> getLines() {
         return lines;
     }
@@ -82,21 +73,15 @@ if de efterfølgende cunstructors??
         isReady = ready;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public void setPickUpTime(LocalTime pickUpTime) {
-        this.pickUpTime = pickUpTime;
-    }
-
     @Override
     public String toString() {
-        String s = "Ordre Nr: " + orderNr + "\n" +
-                "Afhentning kl: " + getPickUpTime() + "\n";
+        String s = String.format("%s %03d","Ordre Nr:", orderNr) + "\n" +
+                "Afhentning kl: " + pickUpTime.getHour() + ":" + pickUpTime.getMinute() + "\n";
         for (OrderLine line : lines) {
             s += line + "\n";
         }
-        return s + "---------------------------\nSamlede pris: " + String.format("%.2f",getTotalCostOfOrder())+ " kr" + "\n###########################";
+        s += "----------------------------------\n";
+        s += String.format("%-24s %7.2f","Samlede pris:",getTotalCostOfOrder())+ "kr";
+        return s + "\n##################################";
     }
 }

@@ -4,7 +4,7 @@ public class Menu {
     private ArrayList<Pizza> menu;
 
     public Menu() {
-        this.menu = new ArrayList<Pizza>();
+        this.menu = new ArrayList<>();
     }
 
 
