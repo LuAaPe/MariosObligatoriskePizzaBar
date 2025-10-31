@@ -1,4 +1,5 @@
 import java.time.LocalTime;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -235,15 +236,27 @@ public class Main {
 
     private static void createOrderLine(Scanner scanner, Order order, Menu menu) {
         while (true) {
-            System.out.println("Indtast pizza nummer:");
+            int quantity;
+            System.out.println("Indtast pizza nummer (1-30):");
             int pizzaId = scanner.nextInt();
+            scanner.nextLine();
+
             if (pizzaId < 1 || pizzaId > 30) {
-                throw new IllegalArgumentException("Fejl: indtast et tal mellem 1-30");
+                System.out.println("Fejl Indtast et tal mellem 1-30");
+                continue;
             }
-            scanner.nextLine();
-            System.out.println("Indtast antal:");
-            int quantity = scanner.nextInt();
-            scanner.nextLine();
+            while (true) {
+                System.out.println("Indtast antal:");
+                quantity = scanner.nextInt();
+                scanner.nextLine();
+                if (quantity <= 0) {
+                    System.out.println("Fejl: Pizza antal skal være over 0");
+                    continue;
+                }
+                break;
+            }
+
+
             order.addProduct(quantity, menu.findPizzaById(pizzaId));
             System.out.println("Tast \"1\" for at tilføje mere eller tast \"-1\" for at afslutte");
             int addMore = scanner.nextInt();

@@ -29,12 +29,6 @@ public class Order {
 
     //Tilføj ordre linje
     public void addProduct(int quantity, Pizza pizza) {
-        if (pizza == null) {
-            throw new IllegalArgumentException("Fejl i indtastning Pizza findes ikke");
-        }
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Ikke muligt at tilføje negativt antal pizzer til ordre");
-        }
         lines.add(new OrderLine(quantity, pizza));
     }
 
