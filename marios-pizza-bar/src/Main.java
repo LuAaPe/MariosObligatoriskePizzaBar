@@ -193,101 +193,138 @@ public class Main {
 
     private static void createOrder(Scanner scanner, OrderList orderList, Menu menu, CustomerArchive customerList) {
         while (true) {
-            Order order;
-            System.out.println("Indtast telefon Nr.");
-            String phoneNr = scanner.nextLine().trim();
+            try {
+                Order order;
+                System.out.println("Indtast telefon Nr.");
+                String phoneNr = scanner.nextLine().trim();
 
-            if ((phoneNr.length() != 8) && (phoneNr.length() != 11)) {
-                System.out.println("Fejl: Indtast et telefon nr på 8 cifre eller 11 cifre");
-                System.out.println(" 8 cifre: 12345678");
-                System.out.println("11 cifre: +45 12345678");
-                continue;
-            }
-            Customer customer = customerList.findByPhoneNumber(phoneNr);
-            if (customer == null) {
-                customer = new Customer(phoneNr);
-                customerList.addCustomer(customer);
-            }
-            while (true) {
-                System.out.println("Specificer afhentningstidpunkt indtast tid(Timer:Minutter) ellers tryk enter");
-                String time = scanner.nextLine().trim();
-                LocalTime pickUpTime;
-                if (!time.isEmpty()) {
-                    try {
-                        pickUpTime = LocalTime.parse(time);
-                    } catch (Exception e) {
-                        System.out.println("Fejl: Ugyldigt tidsformat, brug HH:MM format, fx. 17:45");
-                        continue;
+                if ((phoneNr.length() != 8) && (phoneNr.length() != 11)) {
+                    System.out.println("Fejl: Indtast et telefon nr på 8 cifre eller 11 cifre");
+                    System.out.println(" 8 cifre: 12345678");
+                    System.out.println("11 cifre: +45 12345678");
+                    continue;
+                }
+                Customer customer = customerList.findByPhoneNumber(phoneNr);
+                if (customer == null) {
+                    customer = new Customer(phoneNr);
+                    customerList.addCustomer(customer);
+                }
+                while (true) {
+                    System.out.println("Specificer afhentningstidpunkt indtast tid(Timer:Minutter) ellers tryk enter");
+                    String time = scanner.nextLine().trim();
+                    LocalTime pickUpTime;
+                    if (!time.isEmpty()) {
+                        try {
+                            pickUpTime = LocalTime.parse(time);
+                        } catch (Exception e) {
+                            System.out.println("Fejl: Ugyldigt tidsformat, brug HH:MM format, fx. 17:45");
+                            continue;
+                        }
+                        order = new Order(pickUpTime, customer);
+                    } else {
+                        order = new Order(customer);
                     }
-                    order = new Order(pickUpTime, customer);
-                    break;
-                } else {
-                    order = new Order(customer);
                     break;
                 }
-            }
 
-            createOrderLine(scanner, order, menu);
-            System.out.println(order);
-            orderList.addOrder(order);
-            break;
+                createOrderLine(scanner, order, menu);
+                System.out.println(order);
+                orderList.addOrder(order);
+                break;
+            } catch (Exception e) {
+                System.out.println("Fejl ved oprettelse: " + e.getMessage());
+            }
         }
     }
 
     private static void createOrderLine(Scanner scanner, Order order, Menu menu) {
         while (true) {
-            int quantity;
-            System.out.println("Indtast pizza nummer (1-30):");
-            int pizzaId = scanner.nextInt();
-            scanner.nextLine();
-
-            if (pizzaId < 1 || pizzaId > 30) {
-                System.out.println("Fejl Indtast et tal mellem 1-30");
-                continue;
-            }
-            while (true) {
-                System.out.println("Indtast antal:");
-                quantity = scanner.nextInt();
+            try {
+                System.out.println("Indtast pizza nummer (1-30):");
+                int pizzaId = scanner.nextInt();
                 scanner.nextLine();
-                if (quantity <= 0) {
+
+                if (pizzaId < 1 || pizzaId > 30) {
+                    System.out.println("Fejl Indtast et tal mellem 1-30");
+                    continue;
+                }
+
+                System.out.println("Indtast antal:");
+                int quantity = scanner.nextInt();
+                scanner.nextLine();
+                if (quantity < 1) {
                     System.out.println("Fejl: Pizza antal skal være over 0");
                     continue;
                 }
-                break;
-            }
+                order.addProduct(quantity, menu.findPizzaById(pizzaId));
+                System.out.println(quantity + "x " + menu.findPizzaById(pizzaId).getName() + " tilføjet");
 
 
-            order.addProduct(quantity, menu.findPizzaById(pizzaId));
-            System.out.println("Tast \"1\" for at tilføje mere eller tast \"-1\" for at afslutte");
-            int addMore = scanner.nextInt();
-            if (addMore == -1) {
-                break;
+                System.out.print("Tilføj flere pizzaer (\"1\"= Ja \"-1\"= Nej): ");
+                int addMore = scanner.nextInt();
+                scanner.nextLine();
+
+                if (addMore == -1) {
+                    System.out.println();
+                    break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Fejl: indtast et gyldigt tal");
+                scanner.nextLine();
             }
         }
     }
 
     private static void changePriceOfPizza(Scanner scanner, Menu menu) {
-        System.out.println("Indtast nr på pizza du ønsker at ændre prisen på");
-        int pizzaNr = scanner.nextInt();
-        if (pizzaNr > 30 || pizzaNr < 1) {
-            throw new IllegalArgumentException("Fejl: indtast et nr mellem 1-30");
+        try {
+            System.out.println("Indtast nr på pizza du ønsker at ændre prisen på");
+            int pizzaNr = scanner.nextInt();
+
+            if (pizzaNr > 30 || pizzaNr < 1) {
+                System.out.println("Fejl: indtast et nr mellem 1-30");
+                return;
+            }
+
+
+            Pizza pizza = menu.findPizzaById(pizzaNr);
+            if (pizza == null) {
+                System.out.println("Fejl: Pizza ikke fundet.");
+                return;
+            }
+
+
+            System.out.println("Nuværende pris: " + String.format("%.2f", pizza.getPrice()) + " DKK");
+            System.out.print("Hvad skal den nye pris være? ");
+            double newPrice = scanner.nextDouble();
+            scanner.nextLine();
+
+            if (newPrice < 0 || newPrice > 250) {
+                System.out.println("Fejl: Indtast beløb mellem 0 - 250");
+                return;
+            }
+            pizza.setPrice(newPrice);
+        } catch (InputMismatchException e) {
+            System.out.println("Fejl: Indtast venligst et gyldigt tal.");
+            scanner.nextLine();
         }
-        Pizza pizza = menu.findPizzaById(pizzaNr);
-        System.out.println("Hvad skal prisen ændres til?");
-        double newPrice = scanner.nextDouble();
-        if (newPrice < 0 || newPrice > 250) {
-            throw new IllegalArgumentException("Fejl: Indtast beløb mellem 0 - 250");
-        }
-        pizza.setPrice(newPrice);
     }
 
     private static void finishOrder(Scanner scanner, OrderList orderList) {
-        System.out.println("Indtast nr på den order, du ønsker at færdiggøre");
-        int orderId = scanner.nextInt();
-        Order orderToFinish = orderList.findOrderById(orderId);
-        if (orderToFinish == null) {
-            throw new IllegalArgumentException("Fejl: Ugyldigt ordre nr.");
+        try {
+            System.out.print("Indtast nr på den ordre, du ønsker at færdiggøre: ");
+            int orderId = scanner.nextInt();
+            scanner.nextLine();
+
+            Order orderToFinish = orderList.findOrderById(orderId);
+            if (orderToFinish == null) {
+                System.out.println("Fejl: Ordre med ID " + orderId + " findes ikke.");
+                return;
+            }
+
+            orderList.completeOrder(orderId);
+        } catch (InputMismatchException e) {
+            System.out.println("Fejl: Indtast venligst et gyldigt tal.");
+            scanner.nextLine();
         }
-        orderList.completeOrder(orderId);
     }
 }

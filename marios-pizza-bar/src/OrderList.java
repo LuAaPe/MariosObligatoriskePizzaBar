@@ -78,7 +78,7 @@ public class OrderList {
             System.out.println("Ordren er allerede sat som færdig");
             return;
         } else if (order.getCustomer() != null) {
-            System.out.println("Ordren fjernet fra kø og tilføjet til færdige ordre");
+            System.out.println("Ordre " + order.getOrderNr() + " er markeret som færdig");
             System.out.println("Ordren er tilføjet til kundens profil");
             order.setReady(true);
             order.getCustomer().registerPurchase(order);
