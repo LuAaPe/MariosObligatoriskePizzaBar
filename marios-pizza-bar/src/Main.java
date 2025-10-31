@@ -54,6 +54,7 @@ public class Main {
                 System.out.println("2. Ordre");
                 System.out.println("3. Historik");
                 System.out.println("4. Afslut");
+                System.out.print("Valg: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -90,6 +91,7 @@ public class Main {
                 System.out.println("1. Vis menu");
                 System.out.println("2. Ændrer pris på pizza");
                 System.out.println("3. Gå tilbage");
+                System.out.print("Valg: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -124,6 +126,7 @@ public class Main {
                 System.out.println("2. Vis aktive ordre");
                 System.out.println("3. Afslut ordre");
                 System.out.println("4. Gå tilbage");
+                System.out.print("Valg: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -162,6 +165,7 @@ public class Main {
                 System.out.println("2. Vis dagens omsætning");
                 System.out.println("3. Vis statistik");
                 System.out.println("4. Gå tilbage");
+                System.out.print("Valg: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -195,7 +199,7 @@ public class Main {
         while (true) {
             try {
                 Order order;
-                System.out.println("Indtast telefon Nr.");
+                System.out.print("Indtast telefon Nr: ");
                 String phoneNr = scanner.nextLine().trim();
 
                 if ((phoneNr.length() != 8) && (phoneNr.length() != 11)) {
@@ -210,7 +214,7 @@ public class Main {
                     customerList.addCustomer(customer);
                 }
                 while (true) {
-                    System.out.println("Specificer afhentningstidpunkt indtast tid(Timer:Minutter) ellers tryk enter");
+                    System.out.print("Specificer afhentningstidpunkt (HH:MM) eller tryk ENTER for standard: ");
                     String time = scanner.nextLine().trim();
                     LocalTime pickUpTime;
                     if (!time.isEmpty()) {
@@ -240,7 +244,7 @@ public class Main {
     private static void createOrderLine(Scanner scanner, Order order, Menu menu) {
         while (true) {
             try {
-                System.out.println("Indtast pizza nummer (1-30):");
+                System.out.print("Indtast pizza nummer (1-30): ");
                 int pizzaId = scanner.nextInt();
                 scanner.nextLine();
 
@@ -249,7 +253,7 @@ public class Main {
                     continue;
                 }
 
-                System.out.println("Indtast antal:");
+                System.out.print("Indtast antal: ");
                 int quantity = scanner.nextInt();
                 scanner.nextLine();
                 if (quantity < 1) {
@@ -277,7 +281,7 @@ public class Main {
 
     private static void changePriceOfPizza(Scanner scanner, Menu menu) {
         try {
-            System.out.println("Indtast nr på pizza du ønsker at ændre prisen på");
+            System.out.print("Indtast nr på pizza du ønsker at ændre prisen på: ");
             int pizzaNr = scanner.nextInt();
 
             if (pizzaNr > 30 || pizzaNr < 1) {
@@ -294,7 +298,7 @@ public class Main {
 
 
             System.out.println("Nuværende pris: " + String.format("%.2f", pizza.getPrice()) + " DKK");
-            System.out.print("Hvad skal den nye pris være? ");
+            System.out.print("Hvad skal den nye pris være?: ");
             double newPrice = scanner.nextDouble();
             scanner.nextLine();
 
